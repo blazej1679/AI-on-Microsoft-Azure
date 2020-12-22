@@ -1,0 +1,45 @@
+<h1> Witaj, to jest aplikacja do analizowanie zdjęcia pod kontem czy dana osoba posiada maskę!</h1>
+<form [formGroup]="form">
+  <div class="container">
+
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field style="width: 400px">
+          <input matInput formControlName="url"
+                 [placeholder]="'Wprowadź url zdjęcia które chcesz przeanalizować'"
+          >
+
+          <mat-error *ngIf="form.controls.url.touched && form.controls.url.invalid">
+            <span *ngIf="form.controls.url.errors.required">Proszę wypełnić to pole.</span>
+            <span *ngIf="form.controls.url.errors.pattern">Musi się zaczynać od http:// lub https://.</span>
+          </mat-error>
+        </mat-form-field>
+        <button [disabled]="form.controls.url.invalid" (click)="acceptUrl()">Sprawdź zdjęcie</button>
+
+        <br>
+
+        <div *ngIf="noPhotoInUrl">
+          Pod tym url'em nie ma zdjęcia
+        </div>
+
+      </div>
+
+      <div class="col" style="padding: 0">
+        <div class="container" style="padding: 0">
+          <img [src]="imageUrl" alt="Wprowadź url i zaakceptuj">
+          <div *ngFor="let element of borders">
+            <div class="myBorder"
+                 [style.top.px]="element.top"
+                 [style.width.px]="element.width"
+                 [style.height.px]="element.height"
+                 [style.left.px]="element.left"
+              ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</form>
